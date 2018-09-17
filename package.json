@@ -1,0 +1,14 @@
+{
+  "name": "budgeting",
+  "dependencies": {
+    "coffeescript": "^2.3.1",
+    "growl": "^1.10.5",
+    "grunt": "^1.0.3",
+    "jasmine-node": "^1.16.2"
+  },
+  "devDependencies": {
+    "protractor": "latest",
+    "protractor-pretty-html-reporter": "0.0.15",
+    "selenium-server": "3.14.0"
+  }
+}
