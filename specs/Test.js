@@ -20,7 +20,16 @@ var prices = [];
             // console.log(typeof(table_page.getPriceValuesFromList));
         });
 
-        // it('should login to account', function(){
+        it('regex', function(){
+            expect(number.toMatch("/d{0-3}?,?/d{0-3}?/.?/d{0-3}?"));
+        });
+
+        it('regex2', function(){
+            table_page.matchPriceRegex(table_page.workingBalanceField)
+        });
+
+
+        // it('should get values from list', function(){
         //     TablePage.getPriceValuesFromList();
           // for (number = 1; number < 100; number++) {
           //   var locator = '//*[@id="root"]/main/section/table/tbody/tr[' + number + ']/td[3]/div[2]';
@@ -35,9 +44,6 @@ var prices = [];
           // }
         // });
 
-          it('regex', function(){
-              expect(number.toMatch("/d{0-3}?,?/d{0-3}?/.?/d{0-3}?"));
-              // table_page.matchPriceRegex(table_page.workingBalanceField)
-          });
 
-});
+
+    });
