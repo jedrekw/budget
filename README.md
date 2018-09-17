@@ -1,3 +1,8 @@
+Depndencies:
+Nodejs
+use npm install in base folder to install from json package
+
+
 Test plan draft:
 
 1.  Check if all the fields on the page and column headers load in the right place and with right value
@@ -9,12 +14,11 @@ Test plan draft:
 7.  Check if the total inflow and total outflow values sum up to the working balance value
 7.  Check that if we add incomes/outcomes in a new category it is shown on reports tab
 8.  Check that one category name doesn't show two times on reports tab
-9.  Check that the values in the summed fields match the regex pattern: /d[0-3]?/,?/d[0-3]?/.?/d[0-3]?
+**9**.  Check that the values in the summed fields match the regex pattern: /d[0-3]?/,?/d[0-3]?/.?/d[0-3]?
 
 Enhancements: 
 1. no income categories
 2. Unable to edit/delete incomes/outcomes
 
-Depndencies:
-use npm install in "/test" folder to install from json package
+
 
