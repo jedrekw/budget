@@ -6,7 +6,8 @@ exports.config = {
         'chromeOptions': {
             'args': ['no-sandbox']
         }},
-    baseUrl: "http://localhost:8000",
+    // baseUrl: "http://localhost:8000",
+        baseUrl: "https://budget.modus.app/budget",
     onPrepare: function() {
         jasmine.getEnv().addReporter(prettyReporter);
     }
