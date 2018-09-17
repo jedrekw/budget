@@ -35,9 +35,9 @@ var prices = [];
           // }
         // });
 
-      it('regex', function(){
-          expect(number.toMatch("/d{0-3}?,?/d{0-3}?/.?/d{0-3}?"));
-          // table_page.matchPriceRegex(table_page.workingBalanceField)
-      });
+          it('regex', function(){
+              expect(number.toMatch("/d{0-3}?,?/d{0-3}?/.?/d{0-3}?"));
+              // table_page.matchPriceRegex(table_page.workingBalanceField)
+          });
 
 });
