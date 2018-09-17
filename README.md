@@ -13,7 +13,7 @@ Test plan draft:
 4.  Check if we add an income and an outcome in the same category they are summed up correctly in the reports section
 5.  Check that if we add an income the summed value of inflow changes correctly
 6.  Check that if we add an outcome the summed value of outflow changes correctly
-7.  Check if the total inflow and total outflow values sum up to the working balance value
+**7**.  Check if the total inflow and total outflow values sum up to the working balance value
 7.  Check that if we add incomes/outcomes in a new category it is shown on reports tab
 8.  Check that one category name doesn't show two times on reports tab
 **9**.  Check that the values in the summed fields match the regex pattern: /d[0-3]?/,?/d[0-3]?/.?/d[0-3]?

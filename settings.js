@@ -21,7 +21,34 @@ var SettingsPage = (function () {
             });
         };
 
-    }
+        SettingsPage.prototype.convertCurrencyToNumber = function(currency){
+            // console.log(currency);
+            currency=toString(currency);
+            console.log(currency);
+            var numb = currency.replace(/\D/g, '');
+            // var numb = currency.replace(/\./g, '');
+            // console.log(numb);
+            // numb = numb.replace(/,/g, '');
+            // console.log(numb);
+            // numb = numb.replace(/$/g, '');
+            // console.log(numb);
+            numb=parseInt(numb);
+            console.log(numb);
+            return numb;
+        };
+
+        SettingsPage.prototype.getValue = function(locator){
+            locator.getAttribute('value').then(function (text) {
+                var txt= toString(text);
+                return txt;
+            });
+        };
+
+        SettingsPage.prototype.getTextowo = function(element, callback) {
+            element.getText().then (function(text){
+                callback(text);
+            });
+        };
 
 return SettingsPage;
 })();
