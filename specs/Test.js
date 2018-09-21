@@ -1,69 +1,44 @@
-// var SettingsPage = require("./../settings");
-// var settings = new SettingsPage();
+var SettingsPage = require("./../settings");
+var settings = new SettingsPage();
 var TablePage = require("./../pages/TablePage");
 var table_page = new TablePage();
 var protractor = require("protractor");
-// var jasmine = require("jasmine-node");
 var browser = protractor.browser;
 var EC = protractor.ExpectedConditions;
-var number = "89,276.120";
-var workingBalanceField = element(By.xpath('//*[@id="root"]/main/section/div/div/div[5]/div/div[1]'));
-var totalInflowField = element(By.xpath('//*[@id="root"]/main/section/div/div/div[1]/div/div[1]'));
-var totalOutflowField = element(By.xpath('//*[@id="root"]/main/section/div/div/div[3]/div/div[1]'));
-var workingBalancevalue = ""
-var prices = [];
 
 
     describe('Bugdet - ', function() {
         beforeEach(function() {
             browser.ignoreSynchronization = true;
             browser.waitForAngular();
-            jasmine.DEFAULT_TIMEOUT_INTERVAL = 50000;
+            jasmine.DEFAULT_TIMEOUT_INTERVAL = 500000;
             browser.get("/budget");
-            // browser.driver.wait(EC.presenceOf(dashboard.userAccountButton), 10000);
-            // console.log(typeof(table_page.getPriceValuesFromList));
+            browser.driver.wait(EC.presenceOf(table_page.categoryDropdown), 10000);
         });
 
-        // it('check working balance regex pattern - should succeed', function(){
-        //     var workingBalancevalue = workingBalanceField.getText();
-        //     expect(workingBalancevalue).toMatch("\d{0,3}?,?\d{0,3}?\.?\d{0,3}?");
-        // });
-
-        // it('total inflow and outlow should sum up to working balance - should succeed', function(){
-        //     settings.getValue(workingBalanceField, workingBalancevalue);
-        //     console.log(workingBalancevalue(text));
-            // var totalInflowvalue = settings.getValue(totalInflowField);
-            // var totalOutflowvalue = settings.getValue(totalOutflowField);
-            // var workingBalanceConverted = settings.convertCurrencyToNumber(workingBalancevalue);
-            // var totalInflowConverted = settings.convertCurrencyToNumber(totalInflowvalue);
-            // var totalOutflowConverted = settings.convertCurrencyToNumber(totalOutflowvalue);
-            // console.log(workingBalanceConverted);
-            // var totalInflowAndOutflow = totalInflowConverted+totalOutflowConverted;
-            // console.log(totalInflowAndOutflow);
-            // expect(totalInflowAndOutflow).toEqual(workingBalanceConverted);
-            // expect(settings.convertCurrencyToNumber(workingBalanceField.getText())).toEqual("1")
-        // });
-
-        // it('regex2', function(){
-        //     table_page.matchPriceRegex(table_page.workingBalanceField);
-        // });
-
-
-        it('should get values from list', function(){
-            table_page.getPriceValuesFromList();
-        //   for (number = 1; number < 100; number++) {
-        //     var locator = '//*[@id="root"]/main/section/table/tbody/tr[' + number + ']/td[3]/div[2]';
-        //     browser.findElement(By.xpath(locator)).then(function (err) {
-        //       prices[number] = element(By.xpath(locator)).getText();
-        //       console.log(prices[number])
-        //     }, function (err) {
-        //       if (err) {
-        //         break
-        //       }
-        //     })
-        //   }
+        it('should add a new request - should succeed', function(){
+            table_page.SelectRandomCategory();
+            table_page.InputDescription();
+            table_page.InputValue();
+            table_page.AddRequest();
+            var AddedValueConverted=settings.convertStringToCurrency(table_page.valueValue);
+            var source = browser.driver.getPageSource();
+            expect(source).toContain(table_page.descriptionValue);
+            expect(source).toContain(AddedValueConverted);
         });
 
+        it('total inflow and outlow should sum up to working balance - should succeed', function(){
+            var workingBalancevalue = settings.getValueAndConvert(table_page.workingBalanceField);
+            var totalInflowvalue = settings.getValueAndConvert(table_page.totalInflowField);
+            var totalOutflowvalue = settings.getValueAndConvert(table_page.totalOutflowField);
+            protractor.promise.all([totalInflowvalue, totalOutflowvalue, workingBalancevalue]).then(function (values) {
+                expect((values[0]) - (values[1])).toEqual(values[2]);
+            });
+        });
+
+        it('check working balance regex pattern - should fail', function(){
+            expect(table_page.workingBalanceField.getText()).toMatch("f\d{0,3}?,?\d{0,3}?\.?\d{0,3}?");
+        });
 
 
     });

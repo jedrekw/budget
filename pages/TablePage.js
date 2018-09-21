@@ -1,35 +1,37 @@
-// var SettingsPage = require("./../settings");
-// var settings = new SettingsPage();
-var protractor =
-    require("protractor");
-var browser = protractor.browser;
-var EC = protractor.ExpectedConditions;
-var number = 0;
-var prices = [];
+var SettingsPage = require("./../settings");
+var settings = new SettingsPage();
+var protractor =require("protractor");
 
 var TablePage = (function () {
 
     function TablePage() {
         this.workingBalanceField = element(By.xpath('//*[@id="root"]/main/section/div/div/div[5]/div/div[1]'));
+        this.totalInflowField = element(By.xpath('//*[@id="root"]/main/section/div/div/div[1]/div/div[1]'));
+        this.totalOutflowField = element(By.xpath('//*[@id="root"]/main/section/div/div/div[3]/div/div[1]'));
+        this.categoryDropdown = element(By.name("categoryId"));
+        this.categoryOption = settings.getRandomInteger(1,17);
+        this.descriptionField = element(By.name("description"));
+        this.descriptionValue = settings.getRandomString(10);
+        this.valueField = element(By.name("value"));
+        this.valueValue = settings.getRandomInteger(100000,500000);
+        this.AddButton = element(By.xpath("//button[@type='submit']"));
     }
 
-    TablePage.prototype.matchPriceRegex = function (locator) {
-        this.text = locator.getText();
-        expect(this.text).toMatch("\d{0,3}?,?\d{0,3}?\.?\d{0,3}?");
+    TablePage.prototype.SelectRandomCategory = function () {
+        settings.selectByOprion(this.categoryDropdown, this.categoryOption);
     };
 
-    TablePage.prototype.getPriceValuesFromList = function () {
-      for (number = 1; number < 100; number++) {
-        var locator = '//*[@id="root"]/main/section/table/tbody/tr[' + number + ']/td[3]/div[2]';
-        browser.findElement(By.xpath(locator)).then(function (err) {
-          prices[number] = element(By.xpath(locator)).getText();
-          console.log(prices[number])
-        }, function (err) {
-          if (err) {
-            break;
-          }
-        })
-      }
+
+    TablePage.prototype.InputDescription = function () {
+        settings.clearFieldAndSendKeys(this.descriptionField, this.descriptionValue);
+    };
+
+    TablePage.prototype.InputValue = function () {
+        settings.clearFieldAndSendKeys(this.valueField, this.valueValue);
+    };
+
+    TablePage.prototype.AddRequest = function () {
+        this.AddButton.click();
     };
 
     return TablePage;

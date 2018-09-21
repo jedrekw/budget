@@ -1,12 +1,13 @@
 var SettingsPage = (function () {
 
     function SettingsPage() {
+    }
 
-        SettingsPage.prototype.getRandomInteger = function(min, max) {
+        SettingsPage.prototype.getRandomInteger = function (min, max) {
             return parseInt(Math.random() * (max - min) + min);
         };
 
-        getRandomString = function (length) {
+        SettingsPage.prototype.getRandomString = function (length) {
             var string = '';
             var varters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; //Include numbers if you want
             for (i = 0; i < length; i++) {
@@ -21,36 +22,46 @@ var SettingsPage = (function () {
             });
         };
 
-        SettingsPage.prototype.convertCurrencyToNumber = function(currency){
-            // console.log(currency);
-            currency=toString(currency);
-            console.log(currency);
-            var numb = currency.replace(/\D/g, '');
-            // var numb = currency.replace(/\./g, '');
-            // console.log(numb);
-            // numb = numb.replace(/,/g, '');
-            // console.log(numb);
-            // numb = numb.replace(/$/g, '');
-            // console.log(numb);
-            numb=parseInt(numb);
-            console.log(numb);
-            return numb;
+
+        SettingsPage.prototype.getDropdownOptions = function(dropdown) {
+            return dropdown.all(by.tagName('option'));
         };
 
-        SettingsPage.prototype.getValue = function(locator){
-            locator.getAttribute('value').then(function (text) {
-                var txt= toString(text);
-                return txt;
-            });
+        SettingsPage.prototype.selectByOprion = function(dropdown, value) {
+            return dropdown.all(by.css('option[value="' + value + '"]')).click();
         };
 
-        SettingsPage.prototype.getTextowo = function(element, callback) {
-            element.getText().then (function(text){
-                callback(text);
-            });
+        SettingsPage.prototype.selectByPartialText = function(dropdown, text) {
+            return dropdown.all(by.cssContainingText('option', text)).click();
         };
 
-return SettingsPage;
-})();
+        SettingsPage.prototype.selectByText = function(dropdown, text) {
+            return dropdown.all(by.xpath('option[.="' + text + '"]')).click();
+        };
 
+        SettingsPage.prototype.getValueAndConvert = function (locator) {
+            return locator.getText().then(function (text) {
+                numb = text.replace(/,/g, '');
+                numb = numb.replace(/\$/g, '');
+                numb= numb.replace(/\./g, '');
+                numb = parseInt(numb);
+                console.log(numb);
+                return numb
+             });
+            };
+        SettingsPage.prototype.convertStringToCurrency = function (str) {
+            str=str.toString();
+            if (str.length <= 3){
+                return str+".00";
+            }
+            else if ((str.length <= 6) && (str.length>=4)){
+                return str.slice(0, -3)+","+ str.slice(-3)+".00";
+            }
+            else if (str.length>=7){
+                return str.slice(0, -6)+","+str.slice(-6, -3)+","+ str.slice(-3)+".00";
+            }
+        };
+
+        return SettingsPage;
+    })();
 module.exports = SettingsPage;
